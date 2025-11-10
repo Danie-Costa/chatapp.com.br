@@ -1,18 +1,16 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Web\AuthWebController;
+use App\Http\Controllers\Web\RoomWebController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+Route::get('/', [AuthWebController::class, 'showLogin'])->name('showLogin');
+Route::post('/login', [AuthWebController::class, 'login']);
+Route::get('/register', [AuthWebController::class, 'showRegister']);
+Route::post('/register', [AuthWebController::class, 'register']);
+Route::post('/logout', [AuthWebController::class, 'logout'])->name('logout');
 
-Route::get('/', function () {
-    return view('welcome');
+Route::middleware('session.token')->group(function () {
+    Route::get('/rooms', [RoomWebController::class, 'index'])->name('rooms.index');
+    Route::get('/rooms/{id}', [RoomWebController::class, 'show'])->name('rooms.show');
 });

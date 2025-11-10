@@ -9,7 +9,7 @@ class MessagePolicy
     public function create(User $user, $room)
     {
         // $room pode ser Room ou id; checar se user é membro
-        return $room->users()->where('users.id', $user->id)->exists() || $room->owner_id === $user->id;
+        return $room->users()->where('users.id', $user->id)->exists() || $room->owner_id === $user->id || !$room->is_private;
     }
 
     public function delete(User $user, Message $message)
