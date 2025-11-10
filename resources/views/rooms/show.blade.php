@@ -43,5 +43,18 @@
       }
     });
   });
-</script>
+
+  
+    // Enable pusher logging - don't include this in production
+    Pusher.logToConsole = true;
+
+    var pusher = new Pusher('80f8bddaef41c4329f32', {
+      cluster: 'sa1'
+    });
+
+    var channel = pusher.subscribe('my-channel');
+    channel.bind('new-message', function(data) {
+      window.location.reload(); 
+    });
+</script> 
 @endsection

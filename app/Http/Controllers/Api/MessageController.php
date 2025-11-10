@@ -7,6 +7,8 @@ use App\Models\Room;
 use Illuminate\Http\Request;
 use App\Events\MessageSent; // para broadcasting
 use App\Http\Requests\StoreMessageRequest;
+use App\Events\MyEvent;
+use Illuminate\Support\Facades\Http;
 
 class MessageController extends Controller
 {
@@ -33,6 +35,19 @@ class MessageController extends Controller
         // broadcast via event (MessageSent implements ShouldBroadcast)
         MessageSent::dispatch($message);
 
+        event(new MyEvent('hello world'));
+
+        // Send POST to external API
+        Http::withHeaders([
+            'Authorization' => 'Bearer eb585429a1ce1f7b4733272abb1e8d96b67f128a9d63e1adc291775cfbb65caf',
+        ])->post('https://www.notfy.nineweb.com.br/api/notify/pusher', [
+            'channel' => 'my-channel',
+            'event' => 'new-message',
+            'data' => [
+            'redirect' => 'true',
+            ],
+        ]);
+
         return response()->json($message, 201);
+        }
     }
-}

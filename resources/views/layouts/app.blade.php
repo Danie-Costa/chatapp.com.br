@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>Laravel Chat</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+     <script src="https://js.pusher.com/8.4.0/pusher.min.js"></script>
+
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
